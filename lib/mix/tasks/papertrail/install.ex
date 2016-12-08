@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Papertrail.Install do
     create_directory path
 
     create_file file, """
-    defmodule Repo.Migrations.AddVersions do
+    defmodule Backoffice.Repo.Migrations.AddVersions do
       use Ecto.Migration
 
       def change do

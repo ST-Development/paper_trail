@@ -7,7 +7,7 @@ defmodule PaperTrail.VersionQueries do
   """
   def get_versions(model, id) do
     item_type = model |> Module.split |> List.last
-    version_query(item_type, id) |> Repo.all
+    version_query(item_type, id) |> Backoffice.Repo.all
   end
 
   @doc """
@@ -15,7 +15,7 @@ defmodule PaperTrail.VersionQueries do
   """
   def get_versions(record) do
     item_type = record.__struct__ |> Module.split |> List.last
-    version_query(item_type, record.id) |> Repo.all
+    version_query(item_type, record.id) |> Backoffice.Repo.all
   end
 
   @doc """
@@ -23,7 +23,7 @@ defmodule PaperTrail.VersionQueries do
   """
   def get_version(model, id) do
     item_type = Module.split(model) |> List.last
-    last(version_query(item_type, id)) |> Repo.one
+    last(version_query(item_type, id)) |> Backoffice.Repo.one
   end
 
   @doc """
@@ -31,14 +31,14 @@ defmodule PaperTrail.VersionQueries do
   """
   def get_version(record) do
     item_type = record.__struct__ |> Module.split |> List.last
-    last(version_query(item_type, record.id)) |> Repo.one
+    last(version_query(item_type, record.id)) |> Backoffice.Repo.one
   end
 
   @doc """
   Gets the current record of a version
   """
   def get_current(version) do
-    Repo.get("Elixir." <> version.item_type |> String.to_atom, version.item_id)
+    Backoffice.Repo.get("Elixir." <> version.item_type |> String.to_atom, version.item_id)
   end
 
 

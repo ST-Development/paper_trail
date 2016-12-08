@@ -47,9 +47,9 @@ defmodule PaperTrail do
     |> Multi.insert(:model, changeset)
     |> Multi.run(:version, fn %{model: model} ->
         version = make_version_struct(%{event: "create"}, model, meta)
-        Repo.insert(version)
+        Backoffice.Repo.insert(version)
       end)
-    |> Repo.transaction
+    |> Backoffice.Repo.transaction
   end
 
   @doc """
@@ -60,9 +60,9 @@ defmodule PaperTrail do
     |> Multi.update(:model, changeset)
     |> Multi.run(:version, fn %{model: _model} ->
         version = make_version_struct(%{event: "update"}, changeset, meta)
-        Repo.insert(version)
+        Backoffice.Repo.insert(version)
       end)
-    |> Repo.transaction
+    |> Backoffice.Repo.transaction
   end
 
   @doc """
@@ -73,9 +73,9 @@ defmodule PaperTrail do
     |> Multi.delete(:model, struct)
     |> Multi.run(:version, fn %{model: model} ->
         version = make_version_struct(%{event: "destroy"}, model, meta)
-        Repo.insert(version)
+        Backoffice.Repo.insert(version)
       end)
-    |> Repo.transaction
+    |> Backoffice.Repo.transaction
   end
 
   defp make_version_struct(%{event: "create"}, model, meta) do
